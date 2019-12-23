@@ -1,26 +1,70 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<!-- css reference -->
+<%= stylesheet_link_tag "login" %>
+<!-- font style -->
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<section class="forms-section">
+  <h1 class="section-title">Animated Forms</h1>
+  <div class="forms">
+    <div class="form-wrapper is-active">
+      <button type="button" class="switcher switcher-login">
+        Login
+        <span class="underline"></span>
+      </button>
+      <!-- form for login -->
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html:{class: "form form-login"}) do |f| %>
+        <fieldset>
+          <legend>Please, enter your email and password for login.</legend>
+          <div class="input-block">
+            <label for="login-email">E-mail</label>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", id:"login-email" %>
+          </div>
+          <div class="input-block">
+            <label for="login-password">Password</label>
+            <%= f.password_field :password, autocomplete: "current-password", id: "login-password" %>
+          </div>
+        </fieldset>
+        <%= f.submit "Login", id:"submit", class: "btn-login" %>
+      <% end %>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
+    <div class="form-wrapper">
+      <button type="button" class="switcher switcher-signup">
+        Sign Up
+        <span class="underline"></span>
+      </button>
+      <!-- form for signup -->
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html:{class: "form form-signup"}) do |f| %>
+        <fieldset>
+          <legend>Please, enter your email, password and password confirmation for sign up.</legend>
+          <div class="input-block">
+            <label for="signup-email">E-mail</label>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", id:"signup-email" %>
+          </div>
+          <div class="input-block">
+            <label for="signup-password">Password</label>
+            <%= f.password_field :password, autocomplete: "new-password", id:"signup-password" %>
+          </div>
+          <div class="input-block">
+            <label for="signup-password-confirm">Confirm password</label>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", id:"signup-password-confirm" %>
+          </div>
+        </fieldset>
+        <%= f.submit "Sign up", class:"btn-signup"%>
+      <% end %>
+    </div>
   </div>
-<% end %>
+</section>
+<!-- script to switch between login and signup -->
+<script type="text/javascript">
+  const switchers = [...document.querySelectorAll('.switcher')]
 
-<%= render "devise/shared/links" %>
+  switchers.forEach(item => {
+    item.addEventListener('click', function() {
+      switchers.forEach(item => item.parentElement.classList.remove('is-active'))
+      this.parentElement.classList.add('is-active')
+    })
+  })
+</script>
+
+
+
+
